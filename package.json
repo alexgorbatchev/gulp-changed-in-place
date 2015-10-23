@@ -1,0 +1,45 @@
+{
+  "name": "gulp-changed-in-place",
+  "version": "0.0.0",
+  "description": "Only pass through changed files",
+  "license": "MIT",
+  "repository": "alexgorbatchev/gulp-changed-in-place",
+  "author": {
+    "name": "Alex Gorbatchev",
+    "email": "alex.gorbatchev@gmail.com",
+    "url": "https://github.com/alexgorbatchev"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "file",
+    "files",
+    "changed",
+    "newer",
+    "modified",
+    "modification",
+    "updated",
+    "time",
+    "mtime",
+    "stat",
+    "cache",
+    "cached",
+    "passthrough"
+  ],
+  "dependencies": {
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "concat-stream": "^1.4.6",
+    "gulp": "^3.0.0",
+    "mocha": "*"
+  }
+}
