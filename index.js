@@ -4,6 +4,8 @@ var through = require('through2');
 var GLOBAL_CACHE = {};
 
 module.exports = function (options) {
+  options = options || {};
+
   var cache = options.cache || GLOBAL_CACHE;
   var firstPass = options.firstPass === true;
 
