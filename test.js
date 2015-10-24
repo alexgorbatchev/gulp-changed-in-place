@@ -7,7 +7,7 @@ var changedInPlace = require('./');
 describe('gulp-changed-in-place', function () {
   it('passes all files on start by default', function (done) {
     gulp.src('fixture/*')
-      .pipe(changedInPlace({ cache: {} }))
+      .pipe(changedInPlace({ firstPass: true, cache: {} }))
       .pipe(concatStream(function (buf) {
         assert.equal(2, buf.length);
         assert.equal('a', path.basename(buf[0].path));
@@ -16,9 +16,9 @@ describe('gulp-changed-in-place', function () {
       }));
   });
 
-  it('does not pass all files on start with `passNew: false`', function (done) {
+  it('does not pass all files on start with `firstPass: false`', function (done) {
     gulp.src('fixture/*')
-      .pipe(changedInPlace({ passNew: false, cache: {} }))
+      .pipe(changedInPlace({ firstPass: false, cache: {} }))
       .pipe(concatStream(function (buf) {
         assert.equal(0, buf.length);
         done();
@@ -32,7 +32,7 @@ describe('gulp-changed-in-place', function () {
     shas[path.join(__dirname, 'fixture/b')] = 'e9d71f5ee7c92d6dc9e92ffdad17b8bd49418f98';
 
     gulp.src('fixture/*')
-      .pipe(changedInPlace({ cache: shas }))
+      .pipe(changedInPlace({ firstPass: false, cache: shas }))
       .pipe(concatStream(function (buf) {
         assert.equal(1, buf.length);
         assert.equal('a', path.basename(buf[0].path));

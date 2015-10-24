@@ -5,13 +5,13 @@ var GLOBAL_CACHE = {};
 
 module.exports = function (options) {
   var cache = options.cache || GLOBAL_CACHE;
-  var passNew = options.passNew !== false;
+  var firstPass = options.firstPass === true;
 
   return through.obj(function (file, encoding, done) {
     var newHash = crypto.createHash('sha1').update(file.contents).digest('hex');
     var currentHash = cache[file.path];
 
-    if ((!currentHash && passNew) || (currentHash && currentHash !== newHash)) {
+    if ((!currentHash && firstPass) || (currentHash && currentHash !== newHash)) {
       this.push(file);
     }
 
