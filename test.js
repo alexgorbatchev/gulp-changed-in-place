@@ -43,21 +43,25 @@ describe('gulp-changed-in-place', function () {
 
   it('should update cache before pushing file to stream', function (done) {
     var shas = {};
+
     gulp.src('fixture/*')
       .pipe(changedInPlace({ firstPass: true, cache: shas }))
-      .pipe(es.map(function (file,callback) {
+      .pipe(es.map(function (file, callback) {
         // imitate gulp.dest without actualy writing files
-        // @see https://github.com/gulpjs/vinyl-fs/blob/master/lib/prepareWrite.js#L24 
+        // @see https://github.com/gulpjs/vinyl-fs/blob/master/lib/prepareWrite.js#L24
         var rargetBase = path.resolve(file.cwd, './build')
         var targetPath = path.resolve(rargetBase, file.relative);
         file.base = rargetBase;
         file.path = targetPath;
-        callback(null,file);
+        callback(null, file);
       }))
       .pipe(concatStream(function (files) {
-        files.map(function(file){
-          assert.equal(undefined, shas[file.path],'path of changed file should not be in cache');
-        })
+        assert.equal(2, files.length, 'should be 2 files');
+
+        files.map(function (file) {
+          assert.equal(undefined, shas[file.path], 'path of changed file should not be in cache');
+        });
+
         done();
       }));
   });
