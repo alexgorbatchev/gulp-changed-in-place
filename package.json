@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "concat-stream": "^1.4.6",
+    "event-stream": "^3.3.2",
     "gulp": "^3.0.0",
     "mocha": "*"
   }

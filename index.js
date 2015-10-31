@@ -25,12 +25,12 @@ module.exports = function(options) {
 
     var newHash = crypto.createHash('sha1').update(file.contents).digest('hex');
     var currentHash = cache[file.path];
+    cache[file.path] = newHash;
 
     if ((!currentHash && firstPass) || (currentHash && currentHash !== newHash)) {
       this.push(file);
     }
 
-    cache[file.path] = newHash;
 
     done();
   });

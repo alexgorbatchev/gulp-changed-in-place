@@ -1,6 +1,7 @@
 var path = require('path');
 var assert = require('assert');
 var concatStream = require('concat-stream');
+var es = require('event-stream');
 var gulp = require('gulp');
 var changedInPlace = require('./');
 
@@ -36,6 +37,27 @@ describe('gulp-changed-in-place', function () {
       .pipe(concatStream(function (buf) {
         assert.equal(1, buf.length);
         assert.equal('a', path.basename(buf[0].path));
+        done();
+      }));
+  });
+
+  it('should update cache before pushing file to stream', function (done) {
+    var shas = {};
+    gulp.src('fixture/*')
+      .pipe(changedInPlace({ firstPass: true, cache: shas }))
+      .pipe(es.map(function (file,callback) {
+        // imitate gulp.dest without actualy writing files
+        // @see https://github.com/gulpjs/vinyl-fs/blob/master/lib/prepareWrite.js#L24 
+        var rargetBase = path.resolve(file.cwd, './build')
+        var targetPath = path.resolve(rargetBase, file.relative);
+        file.base = rargetBase;
+        file.path = targetPath;
+        callback(null,file);
+      }))
+      .pipe(concatStream(function (files) {
+        files.map(function(file){
+          assert.equal(undefined, shas[file.path],'path of changed file should not be in cache');
+        })
         done();
       }));
   });
