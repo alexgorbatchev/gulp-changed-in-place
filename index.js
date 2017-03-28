@@ -43,10 +43,10 @@ module.exports = function (options) {
   var processFile;
 
   switch (options.howToDetermineDifference) {
-    case "hash":
+    case 'hash':
       processFile = processFileBySha1Hash;
       break;
-    case "modification-time":
+    case 'modification-time':
       processFile = processFileByModifiedTime;
       break;
     default:

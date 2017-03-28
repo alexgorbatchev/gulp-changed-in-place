@@ -76,7 +76,7 @@ describe('gulp-changed-in-place', function () {
         .pipe(changedInPlace({
           firstPass: true,
           cache: {},
-          howToDetermineDifference: "modification-time"
+          howToDetermineDifference: 'modification-time'
         }))
         .pipe(concatStream(function (buf) {
           assert.equal(2, buf.length);
@@ -91,7 +91,7 @@ describe('gulp-changed-in-place', function () {
         .pipe(changedInPlace({
           firstPass: false,
           cache: {},
-          howToDetermineDifference: "modification-time"
+          howToDetermineDifference: 'modification-time'
         }))
         .pipe(concatStream(function (buf) {
           assert.equal(0, buf.length);
@@ -122,7 +122,7 @@ describe('gulp-changed-in-place', function () {
         .pipe(changedInPlace({
           firstPass: false,
           cache: times,
-          howToDetermineDifference: "modification-time"
+          howToDetermineDifference: 'modification-time'
         }))
         .pipe(concatStream(function (buf) {
           assert.equal(1, buf.length);
@@ -138,7 +138,7 @@ describe('gulp-changed-in-place', function () {
         .pipe(changedInPlace({
           firstPass: true,
           cache: times,
-          howToDetermineDifference: "modification-time"
+          howToDetermineDifference: 'modification-time'
         }))
         .pipe(es.map(function (file, callback) {
           // imitate gulp.dest without actualy writing files
