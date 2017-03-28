@@ -3,35 +3,66 @@ var through = require('through2');
 
 var GLOBAL_CACHE = {};
 
-module.exports = function(options) {
-  options = options || {};
+// look for changes by mtime
+function differenceByModifiedTime(stream, firstPass, file, cache, callback) {
 
-  var cache = options.cache || GLOBAL_CACHE;
-  var firstPass = options.firstPass === true;
+    var newTime = file.stat && file.stat.mtime;
+    var oldTime = cache[file.path];
+    cache[file.path] = newTime.getTime();
+    
+    if ((!oldTime && firstPass) || (oldTime && oldTime !== newTime.getTime() )) {
+      stream.push(file);
+    }
+	
+	  return;
+};
 
-  return through.obj(function(file, encoding, done) {
+// look for changes by sha1 hash
+function differenceBySha1Hash(stream, firstPass, file, cache, callback) {
     // null cannot be hashed
     if (file.contents === null) {
       // if element is really a file, something weird happened, but it's safer
       // to assume it was changed (because we cannot said that it wasn't)
-      // if it's not a file, we don't care, do we? does anybody transform
-      // directories?
+      // if it's not a file, we don't care, do we? does anybody transform directories?
       if (file.stat.isFile()) {
-        this.push(file);
+        stream.push(file);
       }
-
-      return done();
+      return callback();
     }
-
+    
     var newHash = crypto.createHash('sha1').update(file.contents).digest('hex');
     var currentHash = cache[file.path];
     cache[file.path] = newHash;
-
     if ((!currentHash && firstPass) || (currentHash && currentHash !== newHash)) {
-      this.push(file);
+      stream.push(file);
     }
+    
+    return;
+};
 
+module.exports = function(options) {
+  options = options || {};
 
-    done();
+  var howToDetermineDifference;
+  
+  switch(options.howToDetermineDifference) {
+    case "hash":
+        howToDetermineDifference = differenceBySha1Hash;
+        break;
+    case "modification-time":
+        console.log ("using mtime");
+        howToDetermineDifference = differenceByModifiedTime;
+        break;
+    default:
+        howToDetermineDifference = differenceBySha1Hash;
+  }
+
+  var cache = options.cache || GLOBAL_CACHE;
+  var firstPass = options.firstPass === true;
+
+  return through.obj(function(file, encoding, callback) {
+    howToDetermineDifference(this, firstPass, file, cache, callback);
+    callback();
   });
+
 };
