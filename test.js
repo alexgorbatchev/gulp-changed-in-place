@@ -106,7 +106,7 @@ describe('gulp-changed-in-place', function () {
       var fileA = path.join(__dirname, 'fixture/a');
       var fileB = path.join(__dirname, 'fixture/b');
 
-      var timeNow = Date.now() / 1000;
+      var timeNow = Date.now() / 1000;  // https://nodejs.org/docs/latest/api/fs.html#fs_fs_utimes_path_atime_mtime_callback
 
       var theDate = new Date();
       var currentYear = new Date().getFullYear();
