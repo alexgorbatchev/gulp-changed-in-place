@@ -8,8 +8,7 @@ var changedInPlace = require('./');
 
 describe('gulp-changed-in-place', function () {
 
-  describe('when comparing by sha1 hash', function() {
-    
+  describe('when comparing by sha1 hash', function () {
     it('passes all files on start by default', function (done) {
       gulp.src('fixture/*')
         .pipe(changedInPlace({ firstPass: true, cache: {} }))
@@ -70,15 +69,15 @@ describe('gulp-changed-in-place', function () {
         }));
     });
   });
-  
-  describe('when comparing by file modification time: ', function() {
-  
+
+  describe('when comparing by file modification time: ', function () {
     it('passes all files on start by default', function (done) {
       gulp.src('fixture/*')
-        .pipe(changedInPlace({ 
-          firstPass: true, 
+        .pipe(changedInPlace({
+          firstPass: true,
           cache: {},
-          howToDetermineDifference: "modification-time" }))
+          howToDetermineDifference: "modification-time"
+        }))
         .pipe(concatStream(function (buf) {
           assert.equal(2, buf.length);
           assert.equal('a', path.basename(buf[0].path));
@@ -90,15 +89,15 @@ describe('gulp-changed-in-place', function () {
     it('does not pass all files on start with `firstPass: false`', function (done) {
       gulp.src('fixture/*')
         .pipe(changedInPlace({
-          firstPass: false, 
+          firstPass: false,
           cache: {},
-          howToDetermineDifference: "modification-time" }))
+          howToDetermineDifference: "modification-time"
+        }))
         .pipe(concatStream(function (buf) {
           assert.equal(0, buf.length);
           done();
         }));
     });
-
 
     it('should only pass through files when their modification time changed', function (done) {
       var times = {};
@@ -121,9 +120,10 @@ describe('gulp-changed-in-place', function () {
 
       gulp.src('fixture/*')
         .pipe(changedInPlace({
-          firstPass: false, 
+          firstPass: false,
           cache: times,
-          howToDetermineDifference: "modification-time" }))
+          howToDetermineDifference: "modification-time"
+        }))
         .pipe(concatStream(function (buf) {
           assert.equal(1, buf.length);
           assert.equal('a', path.basename(buf[0].path));
@@ -136,9 +136,10 @@ describe('gulp-changed-in-place', function () {
 
       gulp.src('fixture/*')
         .pipe(changedInPlace({
-          firstPass: true, 
+          firstPass: true,
           cache: times,
-          howToDetermineDifference: "modification-time" }))
+          howToDetermineDifference: "modification-time"
+        }))
         .pipe(es.map(function (file, callback) {
           // imitate gulp.dest without actualy writing files
           // @see https://github.com/gulpjs/vinyl-fs/blob/master/lib/prepareWrite.js#L24
@@ -158,6 +159,5 @@ describe('gulp-changed-in-place', function () {
           done();
         }));
     });
-    
   });
 });
