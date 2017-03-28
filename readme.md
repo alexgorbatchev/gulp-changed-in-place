@@ -37,8 +37,40 @@ gulp.task('default', function () {
 
 ### changed(options)
 
-* `firstPass` - `boolean` (Default `false`) - Makes `gulp-changed-in-place` pass through all files once on the first run.
-* `cache` - `Object` (Default global variable) - Object that contains all SHA hashes.
+####`firstPass`
+* `boolean`
+* Default = `false`
+
+  Makes `gulp-changed-in-place` pass through all files once on the first run.
+
+
+####`cache`
+* `Object` 
+* Default = as global variable
+
+  Object of {key: value} for all the files. Value will be hash or modification time, depending on the option for how difference is determined. 
+
+####`howToDetermineDifference`
+
+* Default = `hash`
+
+  Selects how it is determined if a file has been changed.
+
+`hash`: determine using a sha1 hash of the file contents.
+
+`modification-time`: determine using the modification time stamp (mtime) of the file.
+
+```js
+.pipe(changedInPlace( howToDetermineDifference: "modification-time"))
+```
+
+
+# Version History
+
+Added option to determine if file has changed by modification time.
+
+
+
 
 # License
 
