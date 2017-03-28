@@ -50,7 +50,6 @@ module.exports = function(options) {
         howToDetermineDifference = differenceBySha1Hash;
         break;
     case "modification-time":
-        console.log ("using mtime");
         howToDetermineDifference = differenceByModifiedTime;
         break;
     default:
