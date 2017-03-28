@@ -37,20 +37,20 @@ gulp.task('default', function () {
 
 ### changed(options)
 
-####`firstPass`
+#### `firstPass`
 * `boolean`
 * Default = `false`
 
   Makes `gulp-changed-in-place` pass through all files once on the first run.
 
 
-####`cache`
+#### `cache`
 * `Object` 
 * Default = as global variable
 
   Object of {key: value} for all the files. Value will be hash or modification time, depending on the option for how difference is determined. 
 
-####`howToDetermineDifference`
+#### `howToDetermineDifference`
 
 * Default = `hash`
 
