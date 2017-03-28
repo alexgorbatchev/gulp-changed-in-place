@@ -67,7 +67,7 @@ gulp.task('default', function () {
 
 # Version History
 
-Added option to determine if file has changed by modification time.
+[Change log](changelog.md)
 
 
 
