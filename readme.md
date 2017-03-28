@@ -51,7 +51,7 @@ gulp.task('default', function () {
   Object of {key: value} for all the files. Value will be hash or modification time, depending on the option for how difference is determined. 
 
 #### `howToDetermineDifference`
-
+* "hash" || "modification-time"
 * Default = `hash`
 
   Selects how it is determined if a file has been changed.
