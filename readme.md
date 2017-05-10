@@ -43,7 +43,6 @@ gulp.task('default', function () {
 
   Makes `gulp-changed-in-place` pass through all files once on the first run.
 
-
 #### `cache`
 * `Object` 
 * Default = as global variable
@@ -51,7 +50,7 @@ gulp.task('default', function () {
   Object of {key: value} for all the files. Value will be hash or modification time, depending on the option for how difference is determined. 
 
 #### `howToDetermineDifference`
-* "hash" || "modification-time"
+* `"hash" || "modification-time"`
 * Default = `hash`
 
   Selects how it is determined if a file has been changed.
@@ -64,13 +63,15 @@ gulp.task('default', function () {
 .pipe(changedInPlace( howToDetermineDifference: "modification-time"))
 ```
 
+#### `basePath`
+* `string`
+* Default = `undefined`
+
+  Save to cache file paths relative to `basePath`.
 
 # Version History
 
 [Change log](changelog.md)
-
-
-
 
 # License
 

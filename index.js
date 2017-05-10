@@ -56,7 +56,7 @@ module.exports = function (options) {
       processFile = processFileBySha1Hash;
   }
 
-  var basePath = options.basePath || "";
+  var basePath = options.basePath || undefined;
   var cache = options.cache || GLOBAL_CACHE;
   var firstPass = options.firstPass === true;
 
