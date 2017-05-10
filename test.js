@@ -52,9 +52,9 @@ describe('gulp-changed-in-place', function () {
         .pipe(es.map(function (file, callback) {
           // imitate gulp.dest without actualy writing files
           // @see https://github.com/gulpjs/vinyl-fs/blob/master/lib/prepareWrite.js#L24
-          var rargetBase = path.resolve(file.cwd, './build')
-          var targetPath = path.resolve(rargetBase, file.relative);
-          file.base = rargetBase;
+          var targetBase = path.resolve(file.cwd, './build')
+          var targetPath = path.resolve(targetBase, file.relative);
+          file.base = targetBase;
           file.path = targetPath;
           callback(null, file);
         }))
@@ -163,9 +163,9 @@ describe('gulp-changed-in-place', function () {
         .pipe(es.map(function (file, callback) {
           // imitate gulp.dest without actualy writing files
           // @see https://github.com/gulpjs/vinyl-fs/blob/master/lib/prepareWrite.js#L24
-          var rargetBase = path.resolve(file.cwd, './build')
-          var targetPath = path.resolve(rargetBase, file.relative);
-          file.base = rargetBase;
+          var targetBase = path.resolve(file.cwd, './build')
+          var targetPath = path.resolve(targetBase, file.relative);
+          file.base = targetBase;
           file.path = targetPath;
           callback(null, file);
         }))
