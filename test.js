@@ -52,7 +52,7 @@ describe('gulp-changed-in-place', function () {
         .pipe(es.map(function (file, callback) {
           // imitate gulp.dest without actualy writing files
           // @see https://github.com/gulpjs/vinyl-fs/blob/master/lib/prepareWrite.js#L24
-          var targetBase = path.resolve(file.cwd, './build')
+          var targetBase = path.resolve(file.cwd, './build');
           var targetPath = path.resolve(targetBase, file.relative);
           file.base = targetBase;
           file.path = targetPath;
@@ -127,10 +127,8 @@ describe('gulp-changed-in-place', function () {
 
       var timeNow = Date.now() / 1000;  // https://nodejs.org/docs/latest/api/fs.html#fs_fs_utimes_path_atime_mtime_callback
 
-      var theDate = new Date();
-      var currentYear = new Date().getFullYear();
-      var yesterYear = currentYear - 1;
-      var timeThen = new Date().setFullYear(yesterYear);
+      var timeThen = new Date();
+      timeThen.setFullYear(timeThen.getFullYear() - 1);
 
       var fileBTime = fs.statSync(fileB).mtime;
       fs.utimesSync(fileA, timeNow, timeNow);
@@ -163,7 +161,7 @@ describe('gulp-changed-in-place', function () {
         .pipe(es.map(function (file, callback) {
           // imitate gulp.dest without actualy writing files
           // @see https://github.com/gulpjs/vinyl-fs/blob/master/lib/prepareWrite.js#L24
-          var targetBase = path.resolve(file.cwd, './build')
+          var targetBase = path.resolve(file.cwd, './build');
           var targetPath = path.resolve(targetBase, file.relative);
           file.base = targetBase;
           file.path = targetPath;
