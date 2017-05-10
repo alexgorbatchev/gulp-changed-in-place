@@ -68,6 +68,26 @@ describe('gulp-changed-in-place', function () {
           done();
         }));
     });
+
+    it('should use paths relative to `basePath`', function (done) {
+      var shas = {};
+      var basePath = __dirname;
+
+      gulp.src('fixture/*')
+        .pipe(changedInPlace({
+          firstPass: true,
+          basePath: basePath,
+          cache: shas
+        }))
+        .pipe(concatStream(function (files) {
+
+          files.map(function (file) {
+            assert.equal(true, shas.hasOwnProperty(path.relative(basePath, file.path)), 'file path should be relative');
+          });
+
+          done();
+        }));
+    });
   });
 
   describe('when comparing by file modification time: ', function () {
@@ -154,6 +174,27 @@ describe('gulp-changed-in-place', function () {
 
           files.map(function (file) {
             assert.equal(undefined, times[file.path], 'path of changed file should not be in cache');
+          });
+
+          done();
+        }));
+    });
+
+    it('should use paths relative to `basePath`', function (done) {
+      var times = {};
+      var basePath = __dirname;
+
+      gulp.src('fixture/*')
+        .pipe(changedInPlace({
+          firstPass: true,
+          basePath: basePath,
+          cache: times,
+          howToDetermineDifference: 'modification-time'
+        }))
+        .pipe(concatStream(function (files) {
+
+          files.map(function (file) {
+            assert.equal(true, times.hasOwnProperty(path.relative(basePath, file.path)), 'file path should be relative');
           });
 
           done();
