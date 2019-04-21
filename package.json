@@ -40,7 +40,7 @@
   "devDependencies": {
     "concat-stream": "^1.4.6",
     "event-stream": "^3.3.2",
-    "gulp": "^3.0.0",
+    "gulp": "^4.0.1",
     "mocha": "^3.5.3"
   }
 }
